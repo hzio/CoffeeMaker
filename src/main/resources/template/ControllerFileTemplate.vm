@@ -1,0 +1,138 @@
+package $data.packageName;
+
+#parse("common/JavaFileImportClassList.vm")
+#parse("common/JavaFileComment.vm")
+
+@RestController
+@RequestMapping("${data.baseMappingPath}")
+public ${data.classType.name} ${data.roleFileName} implements ApiConst {
+
+    private static Logger logger = LoggerFactory.getLogger(${data.roleFileName}.class);
+
+    @Autowired
+    private $data.service.roleFileName $data.service.varName;
+
+    /**
+    * 保存${data.def.className}
+    * @return
+    */
+    @RequestMapping(value = "save", method = RequestMethod.POST)
+    public ApiResponse save${data.def.className}(@Valid @RequestBody ${data.vo.roleFileName} ${data.vo.varName}, BindingResult bindingResult) {
+
+        ApiResponse apiResponse = new ApiResponse();
+        // 参数校验
+        if (bindingResult.hasErrors()) {
+            apiResponse.setStatus(REQUIRED_PARAMETER_MISSING);
+            return apiResponse;
+        }
+
+        ${data.entity.roleFileName} ${data.entity.varName} = new ${data.entity.roleFileName}();
+#foreach($field in ${data.entity.def.fieldList})
+#if(!${field.column.primaryKey})
+        ${data.entity.varName}.${field.setterName}(${data.vo.varName}.${field.getterName}());
+#end
+#end
+
+        ${data.service.varName}.save(${data.entity.varName});
+
+        return apiResponse;
+    }
+
+
+    /**
+     * 删除${data.def.className}
+     * @return
+     */
+    @RequestMapping(value = "del", method = RequestMethod.POST)
+    public ApiResponse delete${data.def.className}(@Valid @RequestBody ${data.vo.roleFileName} ${data.vo.varName}, BindingResult bindingResult) {
+
+        ApiResponse apiResponse = new ApiResponse();
+        // 参数校验
+        if (bindingResult.hasErrors()) {
+            apiResponse.setStatus(REQUIRED_PARAMETER_MISSING);
+            return apiResponse;
+        }
+
+        ${data.service.varName}.delete(${data.vo.varName}.${data.entity.pk.getterName}());
+        return apiResponse;
+    }
+
+
+    /**
+     * 修改${data.def.className}
+     * @return
+     */
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public ApiResponse update${data.def.className}(@Valid @RequestBody ${data.vo.roleFileName} ${data.vo.varName}, BindingResult bindingResult) {
+
+        ApiResponse apiResponse = new ApiResponse();
+        // 参数校验
+        if (bindingResult.hasErrors()) {
+            apiResponse.setStatus(REQUIRED_PARAMETER_MISSING);
+            return apiResponse;
+        }
+
+        ${data.entity.roleFileName} ${data.entity.varName} = ${data.service.varName}.findById(${data.vo.varName}.${data.entity.pk.getterName}());
+        if (${data.entity.varName} != null) {
+#foreach($field in ${data.entity.def.fieldList})
+#if(!${field.column.primaryKey})
+            ${data.entity.varName}.${field.setterName}(${data.vo.varName}.${field.getterName}());
+#end
+#end
+
+            ${data.service.varName}.update(${data.entity.varName});
+        }
+
+        return apiResponse;
+    }
+
+
+    /**
+     * 查询${data.def.className}列表
+     * @return
+     */
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public ApiResponse query${data.def.className}List(${data.vo.roleFileName} ${data.vo.varName}) {
+
+        ApiResponse apiResponse = new ApiResponse();
+        ${data.entity.roleFileName} param = new ${data.entity.roleFileName}();
+#foreach($field in ${data.entity.def.fieldList})
+        param.${field.setterName}(${data.vo.varName}.${field.getterName}());
+#end
+
+        List<${data.entity.roleFileName}>  ${data.entity.varName}List = ${data.service.varName}.findByParam(param);
+
+        return apiResponse;
+    }
+
+
+    /**
+     * 按主键查询${data.def.className}
+     * @return
+     */
+    @RequestMapping(value = "detail", method = RequestMethod.GET)
+    public ApiResponse query${data.def.className}(${data.vo.roleFileName} ${data.vo.varName}) {
+
+        ApiResponse apiResponse = new ApiResponse();
+        ${data.entity.roleFileName} ${data.entity.varName} = ${data.service.varName}.findBy${data.entity.pk.capitalizedFiledName}(${data.vo.varName}.${data.entity.pk.getterName}());
+
+        return apiResponse;
+    }
+
+
+    /**
+     * 按分页查询${data.def.className}
+     * @return
+     */
+    @RequestMapping(value = "page", method = RequestMethod.POST)
+    public ApiResponse query${data.def.className}Page(@RequestBody ${data.pageQuery.roleFileName}<${data.entity.roleFileName}> ${data.pageQuery.varName}) {
+
+        ApiResponse apiResponse = new ApiResponse();
+        ${data.page.roleFileName}<${data.entity.roleFileName}> pageList = ${data.service.varName}.findByPage(${data.pageQuery.varName});
+        apiResponse.addPage(pageList);
+
+        return apiResponse;
+    }
+
+
+}

@@ -1,0 +1,37 @@
+package $data.packageName;
+
+#parse("common/JavaFileImportClassList.vm")
+#parse("common/JavaFileComment.vm")
+
+@Data
+public ${data.classType.name} ${data.roleFileName}<T> extends ${data.pageBase.roleFileName} implements Serializable {
+
+    /**
+     * 总数
+     */
+    private long total;
+
+    /**
+     * 是否第一页
+     */
+    private boolean firstPage;
+
+    /**
+     * 是否最后一页
+     */
+    private boolean lastPage;
+
+    /**
+     * 结果集
+     */
+    private List<T> result;
+
+    public boolean isFirstPage() {
+        return getPageNum() == 1;
+    }
+
+    public boolean isLastPage() {
+        return (getPageNum() * getPageSize()) - total >= 0;
+    }
+
+}

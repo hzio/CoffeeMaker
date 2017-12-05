@@ -1,0 +1,18 @@
+package $data.packageName;
+
+#parse("common/JavaFileImportClassList.vm")
+#parse("common/JavaFileComment.vm")
+#set($pk = ${data.entity.pk})
+
+public $data.classType.name $data.roleFileName {
+
+#parse("common/CommonMethods.vm")
+
+    /**
+     * 分页查询
+     * @param ${data.pageQuery.varName}
+     * return
+     */
+    ${data.page.roleFileName}<$data.entity.roleFileName> findByPage(${data.pageQuery.roleFileName} ${data.pageQuery.varName});
+
+}

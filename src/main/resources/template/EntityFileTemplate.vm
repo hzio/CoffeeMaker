@@ -1,0 +1,21 @@
+package $data.packageName;
+
+#parse("common/JavaFileImportClassList.vm")
+#parse("common/JavaFileComment.vm")
+
+@Data
+public ${data.classType.name} ${data.roleFileName} implements Serializable {
+
+    public ${data.roleFileName}() {
+    }
+
+#foreach($field in $data.def.fieldList)
+
+    /**
+     * $field.comment
+     */
+    $field.accessFlag.name $field.fieldType.boxingName $field.fieldName;
+#end
+
+
+}

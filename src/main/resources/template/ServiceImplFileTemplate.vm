@@ -1,0 +1,84 @@
+package $data.packageName;
+
+#parse("common/JavaFileImportClassList.vm")
+#parse("common/JavaFileComment.vm")
+#set($pk = ${data.entity.pk})
+
+@Service("${data.service.varName}")
+public ${data.classType.name} ${data.roleFileName} implements ${data.service.roleFileName} {
+
+    private static Logger logger = LoggerFactory.getLogger(${data.roleFileName}.class);
+
+    @Autowired
+    private $data.dao.roleFileName  $data.dao.varName;
+
+    /**
+     * 保存
+     * @param ${data.entity.varName}
+     * return
+     */
+    public Long save($data.entity.roleFileName ${data.entity.varName}) {
+        Objects.requireNonNull(${data.entity.varName});
+        ${data.dao.varName}.save(${data.entity.varName});
+        return ${data.entity.varName}.${pk.getterName}();
+    }
+
+    /**
+     * 按ID删除
+     * @param ${pk.fieldName}
+     * return
+     */
+    public int delete(${pk.fieldType.boxingName} ${pk.fieldName}) {
+        return ${data.dao.varName}.delete(${pk.fieldName});
+    }
+
+    /**
+     * 更新
+     * @param ${data.entity.varName}
+     * return
+     */
+    public int update($data.entity.roleFileName ${data.entity.varName}) {
+        Objects.requireNonNull(${data.entity.varName});
+        return ${data.dao.varName}.update(${data.entity.varName});
+    }
+
+    /**
+     * 按条件查询
+     * @param ${data.entity.varName}
+     * return
+     */
+    public List<$data.entity.roleFileName> findByParam($data.entity.roleFileName ${data.entity.varName}) {
+        Objects.requireNonNull(${data.entity.varName});
+        return ${data.dao.varName}.findByParam(${data.entity.varName});
+    }
+
+    /**
+     * 按主键查询
+     * @param ${pk.fieldName}
+     * return
+     */
+    public $data.entity.roleFileName findBy${pk.capitalizedFiledName}(${pk.fieldType.boxingName} ${pk.fieldName}) {
+        return ${data.dao.varName}.findBy${pk.capitalizedFiledName}(${pk.fieldName});
+    }
+
+    /**
+     * 分页查询
+     * @param ${data.pageQuery.varName}
+     * return
+     */
+    public ${data.page.roleFileName}<$data.entity.roleFileName> findByPage(${data.pageQuery.roleFileName} ${data.pageQuery.varName}) {
+
+        ${data.page.roleFileName}<$data.entity.roleFileName> ${data.page.varName} = new ${data.page.roleFileName}<>();
+        // 结果集
+        List<$data.entity.roleFileName> results = ${data.dao.varName}.findByPage(${data.pageQuery.varName});
+        ${data.page.varName}.setResult(results);
+        // 总数
+        long totalCount = ${data.dao.varName}.findCount(${data.pageQuery.varName});
+        ${data.page.varName}.setTotal(totalCount);
+        // 页码、页长
+        ${data.page.varName}.setPageNum(${data.pageQuery.varName}.getPageNum());
+        ${data.page.varName}.setPageSize(${data.pageQuery.varName}.getPageSize());
+
+        return ${data.page.varName};
+    }
+}

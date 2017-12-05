@@ -1,0 +1,34 @@
+package $data.packageName;
+
+#parse("common/JavaFileImportClassList.vm")
+#parse("common/JavaFileComment.vm")
+
+@Data
+public ${data.classType.name} ${data.roleFileName}<T> extends ${data.pageBase.roleFileName} {
+
+    /**
+     * 查询条件
+     */
+    private T query;
+
+
+    /**
+     * 偏移量
+     */
+    private long offset;
+
+    public long getOffset() {
+        return (getPageNum() - 1) * getPageSize();
+    }
+
+##    /**
+##     * 排序字段
+##     */
+##    private List<String> orderBy;
+
+##    /**
+##     * 排序
+##     */
+##    private SortEnum sortBy;
+
+}

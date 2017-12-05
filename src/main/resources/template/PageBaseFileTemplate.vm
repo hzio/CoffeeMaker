@@ -1,0 +1,23 @@
+package $data.packageName;
+
+#parse("common/JavaFileImportClassList.vm")
+#parse("common/JavaFileComment.vm")
+
+@Data
+public abstract ${data.classType.name} ${data.roleFileName} {
+
+    /**
+     * 页号
+     */
+    private int pageNum = 1;
+
+    /**
+     * 页长
+     */
+    private int pageSize = 10;
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum < 0 ? 1 : pageNum;
+    }
+
+}

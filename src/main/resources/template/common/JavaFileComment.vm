@@ -1,0 +1,9 @@
+#set($c = $data.fileComment)
+
+/**
+* Author:      ${c.author}
+* Mail:        ${c.mail}
+* Date:        ${c.date}
+* Version:     ${c.version}
+* Description: ${c.description}
+*/

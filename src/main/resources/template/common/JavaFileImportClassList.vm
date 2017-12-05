@@ -1,0 +1,3 @@
+#foreach($clazz in $data.importClasses)
+import ${clazz.fullQualifiedName};
+#end

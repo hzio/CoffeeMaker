@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+#set($entityName = ${data.entity.fullQualifiedName})
+#set($fieldList = ${data.entity.def.fieldList})
+#set($pk = ${data.entity.pk})
+
+<mapper namespace="${data.dao.fullQualifiedName}">
+
+    <resultMap id="BaseResultMap" type="${entityName}">
+#foreach($field in $fieldList)
+    #if (${field.column.primaryKey})
+        <id column="${field.column.columnName}" property="${field.fieldName}" jdbcType="${field.column.jdbcTypeName}"/>
+    #else
+    <result column="${field.column.columnName}" property="${field.fieldName}" jdbcType="${field.column.jdbcTypeName}"/>
+    #end
+#end
+</resultMap>
+
+    <!-- 基础列 -->
+    <sql id="_base_column">
+        #foreach($field in $fieldList) ${field.column.columnName}#if ($velocityCount < $fieldList.size()),#end#end
+
+    </sql>
+
+    <!-- 查找条件SQL片段 -->
+    <sql id="_find_condition">
+        <where>
+        #foreach($field in $fieldList)
+    <if test="${field.fieldName} != null">
+                AND ${field.column.columnName} = #{${field.fieldName}}
+            </if>
+        #end
+</where>
+    </sql>
+
+
+    <!-- 分页查找条件SQL片段 -->
+    <sql id="_find_page_condition">
+        <where>
+            <if test="query != null">
+                #foreach($field in $fieldList)
+    <if test="query.${field.fieldName} != null">
+                     AND ${field.column.columnName} = #{query.${field.fieldName}}
+                </if>
+            #end
+</if>
+        </where>
+    </sql>
+
+    <!-- 保存 -->
+    <insert id="save" parameterType="${entityName}" useGeneratedKeys="true" keyProperty="${pk.fieldName}" >
+
+        insert into ${data.table.tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+ #foreach($field in $fieldList)
+    #if (!${field.column.primaryKey})
+   <if test="${field.fieldName} != null">
+                ${field.column.columnName},
+            </if>
+    #end
+#end
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+#foreach($field in $fieldList)
+    #if (!${field.column.primaryKey})
+    <if test="${field.fieldName} != null">
+                #{${field.fieldName}},
+            </if>
+    #end
+#end
+    </trim>
+
+    </insert>
+
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="${pk.fieldType.fullQualifiedName}">
+
+        delete from ${data.table.tableName}
+        where ${pk.column.columnName} = #{${pk.fieldName}, jdbcType=${pk.column.jdbcTypeName}}
+
+    </delete>
+
+
+    <!-- 更新 -->
+    <update id="update" parameterType="${entityName}">
+
+        update ${data.table.tableName}
+        <set>
+#foreach($field in $fieldList)
+    #if (!${field.column.primaryKey})
+    <if test="${field.fieldName} != null">
+                ${field.column.columnName} = #{${field.fieldName}, jdbcType=${field.column.jdbcTypeName}},
+            </if>
+    #end
+#end
+    </set>
+        where ${pk.column.columnName} = #{${pk.fieldName}, jdbcType=${pk.column.jdbcTypeName}}
+
+    </update>
+
+
+    <!-- 按主键查询 -->
+    <select id="findBy${pk.capitalizedFiledName}" resultMap="BaseResultMap" parameterType="${pk.fieldType.fullQualifiedName}">
+
+        select
+        <include refid="_base_column"/>
+        from ${data.table.tableName}
+        where ${pk.column.columnName} = #{${pk.fieldName}, jdbcType=${pk.column.jdbcTypeName}}
+
+    </select>
+
+
+    <!-- 按条件查找 -->
+    <select id="findByParam" resultMap="BaseResultMap" parameterType="${entityName}">
+
+        select
+            <include refid="_base_column"/>
+        from ${data.table.tableName}
+            <include refid="_find_condition"/>
+
+    </select>
+
+    <!-- 按分页查找 -->
+    <select id="findByPage" resultMap="BaseResultMap" parameterType="${data.pageQuery.fullQualifiedName}">
+
+        select
+        <include refid="_base_column"/>
+        from ${data.table.tableName}
+        <include refid="_find_page_condition"/>
+
+        order by ${pk.column.columnName} desc
+        limit #{offset}, #{pageSize}
+
+    </select>
+
+    <!-- 分页统计总数 -->
+    <select id="findCount" resultType="java.lang.Long" parameterType="${data.pageQuery.fullQualifiedName}">
+
+        select count(${pk.column.columnName})
+            from ${data.table.tableName}
+        <include refid="_find_page_condition"/>
+    </select>
+
+</mapper>

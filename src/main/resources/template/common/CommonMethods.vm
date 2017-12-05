@@ -1,0 +1,35 @@
+    /**
+     * 保存
+     * @param ${data.entity.varName}
+     * return
+     */
+    Long save($data.entity.roleFileName ${data.entity.varName});
+
+    /**
+     * 按ID删除
+     * @param ${pk.fieldName}
+     * return
+     */
+    int delete(${pk.fieldType.boxingName} ${pk.fieldName});
+
+    /**
+     * 更新
+     * @param ${data.entity.varName}
+     * return
+     */
+    int update($data.entity.roleFileName ${data.entity.varName});
+
+    /**
+     * 按主键查询
+     * @param ${pk.fieldName}
+     * return
+     */
+    $data.entity.roleFileName findBy${pk.capitalizedFiledName}(${pk.fieldType.boxingName} ${pk.fieldName});
+
+    /**
+     * 按条件查询
+     * @param ${data.entity.varName}
+     * return
+     */
+    List<$data.entity.roleFileName> findByParam($data.entity.roleFileName ${data.entity.varName});
+
