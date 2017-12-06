@@ -22,7 +22,7 @@ Configuration configuration = new Configuration();
 
 **Step two. Generation**
 
-Launch CoffeeMaker via `main` method in CoffeeMakerLauncher.
+Launch CoffeeMaker via `main` method in `CoffeeMakerLauncher`.
 
 
 **Step three. Enjoy :D**
