@@ -1,7 +1,44 @@
 # CoffeeMaker
-A handy tool to generate universal code template.
+A convenient and well-designed tool for generating universal code.
+
+## Design
+```
++----------+  JDBC     +-------------------+    TableMetadata      +------------------------+
+|          | ------>   |                   |   ---------------->   |  DefinitionConverter   |
+| Database |           | MetadataProvider  |                       +------------------------+
+|          |           |                   |                         |
+|          |           |                   |                         | FileDefinition
++----------+           +-------------------+                         v
+                                                                 +- - - - - - - - - - - - - - +
+                                                                 ' Various of file wrappers   '
+                                                                 '                            '
+                                                                 ' +------------------------+ '
+                                                                 ' |      FileWrapper       | '
+                                                                 ' +------------------------+ '
+                                                                 '                            '
+                                                                 +- - - - - - - - - - - - - - +
+                                                                     |
+                                                                     |
+                                                                     |
+                     +- - - - - - - - - - - -+                       |
+                     ' XxxEntity.java        '                       |
+                     ' XxxMapper.xml         '                       |
+                     ' XxxDao.java           '                       |
+                     ' XxxService.java       '                       |
+                     ' XxxServiceImpl.java   '                       |
+                     ' XxxControoler.java    '                       |
+                     ' XxxVo.java            '                       |
+                     '                       '                       v
+                     ' +-------------------+ '  Parse & output     +------------------------+
+                     ' |    Code Files     | ' <----------------   |                        |
+                     ' +-------------------+ '                     |       FileParser       |
+                     '                       '                     |                        |
+                     +- - - - - - - - - - - -+                     +------------------------+
+```
 
 
+
+## Usage
 
 **Step one. Configuration**
 
@@ -22,7 +59,7 @@ Configuration configuration = new Configuration();
 
 **Step two. Generation**
 
-Launch CoffeeMaker via `main` method in `CoffeeMakerLauncher`.
+Launch CoffeeMaker via `main` method of `CoffeeMakerLauncher`.
 
 
 **Step three. Enjoy :D**
@@ -36,5 +73,5 @@ Generate code template list:
 - VO file
 - Controller file
 
-
-
+## Scalability
+To customize code generation template by adding(editing) self-defined(existing) `FileWrapper` and `FileTemplate`
