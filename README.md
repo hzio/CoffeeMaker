@@ -26,7 +26,7 @@ A convenient and well-designed tool for generating universal code.
                      ' XxxDao.java             '                       |
                      ' XxxService.java         '                       |
                      ' XxxServiceImpl.java     '                       |
-                     ' XxxControoler.java      '                       |
+                     ' XxxController.java      '                       |
                      ' XxxVo.java              '                       |
                      '                         '                       v
                      ' +---------------------+ '  Parse & export     +------------------------+
