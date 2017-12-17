@@ -1,0 +1,11 @@
+[Database]{rows:2} - JDBC -> [MetadataProvider]{rows:2} - TableMetadata -> [DefinitionConverter]{flow:south}
+
+[DefinitionConverter] - FileDefinition -> [FileWrapper]{flow:south; rows:2}
+
+(Various of file wrappers [FileWrapper])
+
+[FileWrapper] -> [FileParser]{flow:west; rows:2}
+
+[FileParser] - Parse & export -> [Ultimate Code Files]
+
+(XxxEntity.java \n XxxMapper.xml \n XxxDao.java\n XxxService.java \n XxxServiceImpl.java \n XxxControoler.java  \n XxxVo.java  [Ultimate Code Files])

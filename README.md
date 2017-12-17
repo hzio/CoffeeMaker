@@ -3,37 +3,37 @@ A convenient and well-designed tool for generating universal code.
 
 ## Design
 ```
-+----------+  JDBC     +-------------------+    TableMetadata      +------------------------+
-|          | ------>   |                   |   ---------------->   |  DefinitionConverter   |
-| Database |           | MetadataProvider  |                       +------------------------+
-|          |           |                   |                         |
-|          |           |                   |                         | FileDefinition
-+----------+           +-------------------+                         v
-                                                                 +- - - - - - - - - - - - - - +
-                                                                 ' Various of file wrappers   '
-                                                                 '                            '
-                                                                 ' +------------------------+ '
-                                                                 ' |      FileWrapper       | '
-                                                                 ' +------------------------+ '
-                                                                 '                            '
-                                                                 +- - - - - - - - - - - - - - +
-                                                                     |
-                                                                     |
-                                                                     |
-                     +- - - - - - - - - - - -+                       |
-                     ' XxxEntity.java        '                       |
-                     ' XxxMapper.xml         '                       |
-                     ' XxxDao.java           '                       |
-                     ' XxxService.java       '                       |
-                     ' XxxServiceImpl.java   '                       |
-                     ' XxxControoler.java    '                       |
-                     ' XxxVo.java            '                       |
-                     '                       '                       v
-                     ' +-------------------+ '  Parse & output     +------------------------+
-                     ' |    Code Files     | ' <----------------   |                        |
-                     ' +-------------------+ '                     |       FileParser       |
-                     '                       '                     |                        |
-                     +- - - - - - - - - - - -+                     +------------------------+
++----------+  JDBC     +---------------------+    TableMetadata      +------------------------+
+|          | ------>   |                     |   ---------------->   |  DefinitionConverter   |
+| Database |           |  MetadataProvider   |                       +------------------------+
+|          |           |                     |                         |
+|          |           |                     |                         | FileDefinition
++----------+           +---------------------+                         v
+                                                                   +- - - - - - - - - - - - - - +
+                                                                   ' Various of file wrappers   '
+                                                                   '                            '
+                                                                   ' +------------------------+ '
+                                                                   ' |      FileWrapper       | '
+                                                                   ' +------------------------+ '
+                                                                   '                            '
+                                                                   +- - - - - - - - - - - - - - +
+                                                                       |
+                                                                       |
+                                                                       |
+                     +- - - - - - - - - - - - -+                       |
+                     ' XxxEntity.java          '                       |
+                     ' XxxMapper.xml           '                       |
+                     ' XxxDao.java             '                       |
+                     ' XxxService.java         '                       |
+                     ' XxxServiceImpl.java     '                       |
+                     ' XxxControoler.java      '                       |
+                     ' XxxVo.java              '                       |
+                     '                         '                       v
+                     ' +---------------------+ '  Parse & export     +------------------------+
+                     ' | Ultimate Code Files | ' <----------------   |                        |
+                     ' +---------------------+ '                     |       FileParser       |
+                     '                         '                     |                        |
+                     +- - - - - - - - - - - - -+                     +------------------------+
 ```
 
 
