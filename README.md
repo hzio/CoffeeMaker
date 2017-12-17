@@ -21,6 +21,8 @@ A convenient and well-designed tool for generating universal code.
                                                                        |
                                                                        |
                      +- - - - - - - - - - - - -+                       |
+                     ' OUTPUT:                 '                       |
+                     '                         '                       |
                      ' XxxEntity.java          '                       |
                      ' XxxMapper.xml           '                       |
                      ' XxxDao.java             '                       |

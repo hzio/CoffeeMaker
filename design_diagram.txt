@@ -8,4 +8,4 @@
 
 [FileParser] - Parse & export -> [Ultimate Code Files]
 
-(XxxEntity.java \n XxxMapper.xml \n XxxDao.java\n XxxService.java \n XxxServiceImpl.java \n XxxController.java  \n XxxVo.java  [Ultimate Code Files])
+(OUTPUT:\n\n XxxEntity.java \n XxxMapper.xml \n XxxDao.java\n XxxService.java \n XxxServiceImpl.java \n XxxController.java  \n XxxVo.java  [Ultimate Code Files])
